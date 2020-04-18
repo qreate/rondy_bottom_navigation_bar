@@ -1,8 +1,8 @@
 name: rondy_bottom_navigation_bar
-description: A new Flutter package project.
-version: 0.0.1
-author:
-homepage:
+description: An nice and simple bottom bar with rounded corners.
+version: 0.0.2
+author: Joran Dob <joran998@gmail.com
+homepage: https://qreate.io
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

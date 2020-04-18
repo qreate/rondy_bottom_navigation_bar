@@ -12,16 +12,18 @@ class RondyBottomNavigationBar extends StatefulWidget {
   final Color activeIconColor;
   final List<RondyBarItem> items;
   final Function(int index) onItemClick;
+  final double iconSize;
 
-  const RondyBottomNavigationBar(
-      {Key key,
-      @required this.activeTextStyle,
-      @required this.textStyle,
-      @required this.iconColor,
-      @required this.activeIconColor,
-      @required this.items,
-      @required this.onItemClick})
-      : super(key: key);
+  const RondyBottomNavigationBar({
+    Key key,
+    @required this.activeTextStyle,
+    @required this.textStyle,
+    @required this.iconColor,
+    @required this.activeIconColor,
+    @required this.items,
+    @required this.onItemClick,
+    this.iconSize = 32.0,
+  }) : super(key: key);
 
   @override
   _RondyBottomNavigationBarState createState() =>
@@ -33,9 +35,12 @@ class _RondyBottomNavigationBarState extends State<RondyBottomNavigationBar> {
   Widget _createContainer(List<Widget> tiles) {
     return DefaultTextStyle.merge(
       overflow: TextOverflow.ellipsis,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: tiles,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: tiles,
+        ),
       ),
     );
   }
@@ -73,16 +78,19 @@ class _RondyBottomNavigationBarState extends State<RondyBottomNavigationBar> {
             List.generate(
               widget.items.length,
               (index) {
-                return GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () => _onInternalItemClick(index),
-                  child: _RondyBottomNavigationBarItem(
-                    active: index == selectedIndex,
-                    activeTextStyle: widget.activeTextStyle,
-                    activeIconColor: widget.activeIconColor,
-                    textStyle: widget.textStyle,
-                    iconColor: widget.iconColor,
-                    rondyBarItem: widget.items[index],
+                return Flexible(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () => _onInternalItemClick(index),
+                    child: _RondyBottomNavigationBarItem(
+                      active: index == selectedIndex,
+                      activeTextStyle: widget.activeTextStyle,
+                      activeIconColor: widget.activeIconColor,
+                      textStyle: widget.textStyle,
+                      iconColor: widget.iconColor,
+                      rondyBarItem: widget.items[index],
+                      iconSize: widget.iconSize,
+                    ),
                   ),
                 );
               },
@@ -101,6 +109,7 @@ class _RondyBottomNavigationBarItem extends StatelessWidget {
   final Color iconColor;
   final Color activeIconColor;
   final RondyBarItem rondyBarItem;
+  final double iconSize;
 
   const _RondyBottomNavigationBarItem(
       {Key key,
@@ -109,31 +118,29 @@ class _RondyBottomNavigationBarItem extends StatelessWidget {
       @required this.textStyle,
       @required this.iconColor,
       @required this.activeIconColor,
-      @required this.rondyBarItem})
+      @required this.rondyBarItem,
+      @required this.iconSize})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            rondyBarItem.icon,
-            size: 38.0,
-            color: active ? activeIconColor : iconColor,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(
+          rondyBarItem.icon,
+          size: iconSize,
+          color: active ? activeIconColor : iconColor,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Text(
+            rondyBarItem.label,
+            style: active ? activeTextStyle : textStyle,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0),
-            child: Text(
-              rondyBarItem.label,
-              style: active ? activeTextStyle : textStyle,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -80,22 +80,10 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.black,
         ),
         items: [
-          RondyBarItem(
-            label: "Home",
-            icon: Icons.home,
-          ),
-          RondyBarItem(
-            label: "Home",
-            icon: Icons.home,
-          ),
-          RondyBarItem(
-            label: "Home",
-            icon: Icons.home,
-          ),
-          RondyBarItem(
-            label: "Home",
-            icon: Icons.home,
-          ),
+          RondyBarItem(label: "Saved", icon: Icons.save_alt),
+          RondyBarItem(label: "Recipes", icon: Icons.restaurant),
+          RondyBarItem(label: "Products", icon: Icons.restaurant_menu),
+          RondyBarItem(label: "Menu", icon: Icons.menu),
         ],
       ),
       body: Center(
